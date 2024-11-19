@@ -86,25 +86,32 @@ export default function ProfilePage() {
                 )}
                 {/* Logout Button */}
                 <div className="mt-4 flex flex-col items-center space-y-2">
+    <div className="w-64"> {/* Set a fixed width for the button container */}
         <button
             onClick={() => router.push('/list-siswa')}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
         >
             Go to List Siswa
         </button>
+    </div>
+    <div className="w-64">
         <button
             onClick={() => router.push('/signup')}
-            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+            className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
         >
             Go to Signup
         </button>
+    </div>
+    <div className="w-64">
         <button
             onClick={() => router.push('/login')}
-            className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+            className="w-full px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
         >
             Go to Login
         </button>
     </div>
+</div>
+
             </div>
             
         </div>

@@ -39,10 +39,17 @@ export default function LoginPage() {
         });
   
         // Show a swal confirmation after login
-        swal("Success", `Welcome, ${response.data.username}!`, "success").then(() => {
-          // Redirect to callback URL or home after clicking "OK"
+        swal({
+          title: "Success",
+          text: `Welcome, ${response.data.username}!`,
+          icon: "success",
+          timer: 3000, // Close after 3 seconds
+          buttons: undefined, // Disable buttons to ensure auto-close
+        }).then(() => {
+          // Redirect to callback URL or home after closing
           router.push(callback || "/");
         });
+        
         
   
         // Redirect to callback URL or home
