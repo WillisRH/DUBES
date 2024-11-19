@@ -5,14 +5,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;      /* Firefox */
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   color: var(--foreground);
@@ -20,8 +22,39 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* Background of the scrollbar track */
+  border-radius: 10px; /* Round the corners of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--foreground); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Round the corners of the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb on hover */
+}
+
+/* For Firefox */
+html {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: var(--foreground) rgba(0, 0, 0, 0.1); /* Thumb and track colors */
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+/* Hide scrollbar globally */
+
+root::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
 }

@@ -9,8 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        sepia: {
+          100: '#f4f1ea',
+          200: '#e8e1d3',
+          700: '#8c7a5a',
+          900: '#5c4f3a',
+        },
+        greenia: {
+          100: '#f4f1ea',
+          200: '#a7f3d0',
+          700: '#065f46',
+          900: '#5c4f3a',
+        },
+        blunia: "#1d4ed8",
+        pinky: '#a16207'
+      },
+      fontFamily: {
+        serif: ['Playfair Display', 'Georgia', 'serif'],
       },
     },
   },
