@@ -11,7 +11,7 @@ export default function AboutUs() {
         <p className="text-lg text-gray-800 p-4">
         DUBES, adalah sebuah projek P5 yang bertujuan untuk meninjau kesehatan mental, fisik, serta lingkungan belajar siswa-siswi SMAN 12 Jakarta. Dengan metode Kuantitatif yaitu sebuah kuisioner, para siswa-siswi mengisi kuisioner yang sudah disiapkan lewat website kami. Setiap pertanyaan yang dijawab oleh siswa-siswi akan mempengaruhi hasil tes mereka, ketika mereka sudah menyelesaikan kuisioner, web akan menunjukkan hasil dari kuisioner yang mereka telah isi. Ada 3 klasifikasi untuk mengukur tingkat permasalahan yang dialami siswa-siswi, hijau artinya siswa-siswi tidak memiliki masalah terkait mental, fisik dan lingkungan nya, kuning artinya siswa-siswi memiliki masalah namun belum sampai ke tingkat yang serius, merah artinya siswa-siswi memiliki masalah yang sangat serius sehingga perlu ditangani oleh guru BK. Mengenai itu, kami sudah bekerjasama dengan guru BK SMAN 12 Jakarta, agar nantinya ketika siswa-siswi memiliki masalah serius, guru BK akan turun tangan dan membantu siswa-siswi tersebut agar bisa terselesaikan masalahnya.
         <br></br>
-        <br></br>
+        <br></br> 
         Kelompok kami beranggotakan 6 orang, yang pertama yaitu Willis sebagai ketua dan pembuat website DUBES, yang kedua Azzam sebagai kontributor website DUBES dan proposal, yang ketiga yaitu Yuanita sebagai pembuat proposal, yang ke-empat yaitu Naila sebagai pembuat poster DUBES dan kontributor proposal, yang ke-lima yaitu Alfiyah sebagai kontributor proposal dan poster DUBES, yang ke-enam yaitu Dewi sebagai kontributor proposal dan poster DUBES.
         </p>
         {/* Centered image */}

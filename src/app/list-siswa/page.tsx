@@ -40,11 +40,15 @@ const ShowPage = () => {
 
     useEffect(() => {
         const classes = users.reduce((acc: { [key: string]: boolean }, user) => {
-            if (user.class) acc[user.class] = true;
+            if (user.class) {
+                acc[user.class] = false; // Initialize all classes as hidden (false)
+            }
             return acc;
         }, {});
+    
         setVisibleClasses(classes);
     }, [users]);
+    
 
     if (loading) {
         return (
@@ -182,7 +186,7 @@ const ShowPage = () => {
                             onClick={() => toggleClassVisibility(className)}
                             className="text-xl font-bold text-black cursor-pointer p-2 bg-gray-100 rounded-md shadow-md hover:bg-gray-300 transition-colors"
                         >
-                             {className.toUpperCase()} ({classUsers.length} students) {visibleClasses[className] ? '▲' : '▼'}
+                             {className.toUpperCase()} ({classUsers.length} murid) {visibleClasses[className] ? '▲' : '▼'}
                         </h1>
 
                         {visibleClasses[className] && (
