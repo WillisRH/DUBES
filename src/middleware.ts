@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const isPublicPath = path === '/login' || path === '/' || path === "/body-score-test";
+  const isPublicPath = path === '/login' || path === '/' || path === "/body-score-test" || path.startsWith("/about-us");
   const token = request.cookies.get('token')?.value;
 
   // Call the /api/admin/me endpoint if the path is protected and a token is present
