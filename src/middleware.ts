@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
 
   // Call the /api/admin/me endpoint if the path is protected and a token is present
   if (!isPublicPath && token) {
-    try {
+    try { 
       // Call /api/admin/me to validate the token or user session
       const response = await fetch(`${request.nextUrl.origin}/api/admin/me`, {
         method: 'GET',
