@@ -164,7 +164,7 @@ export default function LiraVintageWebsite() {
         </div>
 
         <div className="timeline-item bg-sepia-100 p-6 rounded-lg shadow-md text-right relative">
-          <h3 className="text-2xl font-bold mb-4">XX November 2024</h3>
+          <h3 className="text-2xl font-bold mb-4">11 Desember 2024</h3>
           <p className="text-lg">
             Laporan diajukan dan misi dari P5 kami telah selesai di laksanakan!
           </p>

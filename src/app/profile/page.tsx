@@ -37,7 +37,7 @@ export default function ProfilePage() {
         try {
             await axios.get('/api/admin/logout');
             sessionStorage.removeItem('username');
-            router.push('/login');
+            router.push('/login?cS=true');
         } catch (error: any) {
             console.error(error.message);
         }
@@ -85,32 +85,49 @@ export default function ProfilePage() {
 
                 )}
                 {/* Logout Button */}
-                <div className="mt-4 flex flex-col items-center space-y-2">
-    <div className="w-64"> {/* Set a fixed width for the button container */}
+                <div className="mt-4 grid grid-cols-2 gap-4 items-center">
+    <div className="w-full"> {/* Removed the fixed width, as grid controls layout */}
         <button
             onClick={() => router.push('/list-siswa')}
             className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
         >
-            Go to List Siswa
+            List Siswa
         </button>
     </div>
-    <div className="w-64">
+    <div className="w-full">
+        <button
+            onClick={() => router.push('/list-admin')}
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        >
+            List Admin
+        </button>
+    </div>
+    <div className="w-full">
         <button
             onClick={() => router.push('/signup')}
             className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
         >
-            Go to Signup
+            Signup
         </button>
     </div>
-    <div className="w-64">
+    <div className="w-full">
         <button
             onClick={() => router.push('/login')}
             className="w-full px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
         >
-            Go to Login
+            Login
+        </button>
+    </div>
+    <div className="w-full">
+        <button
+            onClick={logout}
+            className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+        >
+            Logout
         </button>
     </div>
 </div>
+
 
             </div>
             

@@ -1,11 +1,19 @@
 import connectMongoDB from "@/utils/mongodb";
 import Admin from "@/models/Admin";
 import bcryptjs from "bcryptjs";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getDataFromToken } from "@/utils/getDataFromToken";
 
 connectMongoDB();
 
 async function POST(request: NextRequest) {
+  const tokenData = getDataFromToken(request);
+    if (!tokenData) {
+        // If there's no token, return an error response
+        return NextResponse.json({ message: 'Unauthorized: No token provided' }, { status: 401 });
+    }
+
+
   try {
     const reqBody = await request.json();
     const { username, password } = reqBody;

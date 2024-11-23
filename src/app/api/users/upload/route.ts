@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectMongoDB from '@/utils/mongodb';
 import User from '@/models/User';
+import { getDataFromToken } from '@/utils/getDataFromToken';
 
 export async function POST(req: NextRequest) {
     await connectMongoDB();
+    const tokenData = getDataFromToken(req);
+    if (!tokenData) {
+        // If there's no token, return an error response
+        return NextResponse.json({ message: 'Unauthorized: No token provided' }, { status: 401 });
+    }
 
     try {
         const users = await req.json();

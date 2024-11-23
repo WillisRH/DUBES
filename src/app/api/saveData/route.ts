@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectMongoDB from '@/utils/mongodb';
 import Report from '@/models/Report';
 import User from '@/models/User'; // Import the User model
+import { getDataFromToken } from '@/utils/getDataFromToken';
 interface IUser extends Document {
     nisn: string;
     name: string;
@@ -60,6 +61,12 @@ export async function POST(req: NextRequest) {
 // GET Method: Retrieve all reports
 export async function GET(req: NextRequest) {
     await connectMongoDB();
+    const tokenData = getDataFromToken(req);
+    if (!tokenData) {
+        // If there's no token, return an error response
+        return NextResponse.json({ message: 'Unauthorized: No token provided' }, { status: 401 });
+    }
+
 
     try {
         const reports = await Report.find(); // Fetch all reports
@@ -73,6 +80,12 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     await connectMongoDB();
+    const tokenData = getDataFromToken(req);
+    if (!tokenData) {
+        // If there's no token, return an error response
+        return NextResponse.json({ message: 'Unauthorized: No token provided' }, { status: 401 });
+    }
+
 
     try {
         const { id, handled } = await req.json();
