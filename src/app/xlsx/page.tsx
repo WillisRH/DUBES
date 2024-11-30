@@ -102,7 +102,7 @@ const XlsxPage = () => {
             <Navbar />
             <BackButton />
         <div className="flex flex-col items-center py-10 px-4 bg-gray-50 min-h-screen mt-4">
-            <h1 className="text-2xl font-bold mb-6 text-gray-700">Upload Your File</h1>
+            <h1 className="text-2xl font-bold mb-6 text-gray-700">Upload Your File (.xlsx/.csv)</h1>
             <form onSubmit={handleFileUpload} className="w-full max-w-md">
                 <div 
                     className={`border-2 border-dashed rounded-lg p-6 text-center 

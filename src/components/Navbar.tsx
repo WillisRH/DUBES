@@ -89,7 +89,7 @@ function Navbar() {
       <ul className="flex space-x-6 items-center mr-4">
         <li>
           <Link href={profileLink}>
-            <div className="hover:bg-gray-700 p-2 rounded-full">
+            <div className="hover:bg-gray-700 p-2 rounded">
               {profileContent}
             </div>
           </Link>

@@ -286,7 +286,7 @@ const StatsPage = () => {
                 {reportData && reportData.length > 0 ? (
                     reportData.map((report: any, index: any) => (
                         <React.Fragment key={index}>
-                            <div className="w-full max-w-2xl p-6 bg-white shadow-md rounded-lg mb-10">
+                            <div className="w-full max-w-4xl p-6 bg-white shadow-md rounded-lg mb-10">
                                 {index === 0 && (  // Display name and NISN only for the first report
                                     <div>
                                         <h1 className="text-2xl font-bold mb-4 text-gray-800 text-center">

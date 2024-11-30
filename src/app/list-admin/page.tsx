@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import { toast } from "react-toastify";
+import BackButton from "@/components/BackButton";
 
 interface User {
   _id: string;
@@ -99,7 +100,8 @@ export default function ManageUsers() {
   return (
     <div>
       <Navbar />
-      <div className={`container mx-auto py-8 text-black ${showDeleteModal || showRegisterModal ? "blur-sm" : ""} p-4`}>
+      <BackButton />
+      <div className={`container mt-4 mx-auto py-8 text-black ${showDeleteModal || showRegisterModal ? "blur-sm" : ""} p-4`}>
         <h1 className="text-3xl font-bold text-center mb-8">Manage Admins</h1>
         <div className="mb-4">
           <input
@@ -116,7 +118,7 @@ export default function ManageUsers() {
           onClick={openRegisterModal}
           className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
         >
-          Register New User
+          Register New Admin
         </button>
 
         {loading ? (
@@ -182,7 +184,7 @@ export default function ManageUsers() {
       {showRegisterModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-black">
           <div className="bg-white p-6 rounded shadow-lg w-96">
-            <h2 className="text-xl font-semibold mb-4">Register New User</h2>
+            <h2 className="text-xl font-semibold mb-4">Register a new Admin</h2>
             <input
               type="text"
               placeholder="Username"

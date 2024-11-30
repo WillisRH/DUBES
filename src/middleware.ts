@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const isPublicPath = path === '/login' || path === '/' || path === "/body-score-test" || path.startsWith("/about-us");
+  const isPublicPath = path === '/login' || path === '/' || path === "/body-score-test" || path === "/kesan-pesan" || path.startsWith("/about-us");
   const token = request.cookies.get('token')?.value;
 
   // Prevent logged-in users from accessing the /signup route

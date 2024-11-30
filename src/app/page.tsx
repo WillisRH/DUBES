@@ -234,7 +234,7 @@ export default function LiraVintageWebsite() {
           {/* Contact Information */}
           <div className="mb-6 md:mb-0">
             <h4 className="text-xl font-bold mb-2">Contact</h4>
-            <p>Email: contact@dubes.my.id</p>
+            <p>Email: willisrihatman54@gmail.com</p>
           </div>
 
           {/* Social Media Links */}
