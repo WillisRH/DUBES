@@ -62,7 +62,7 @@ export default function KesanPesan() {
       <div>
         <Navbar />
         <BackButton />
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
           <div className="bg-white p-8 rounded-md shadow-md w-full max-w-lg text-center">
             <h2 className="text-2xl font-bold mb-6 text-black">
               Terimakasih atas masukan dan saran-nya!
@@ -104,7 +104,7 @@ export default function KesanPesan() {
       <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
         <div className="bg-white p-8 rounded-md shadow-md w-full max-w-lg">
           <h2 className="text-2xl font-bold mb-6 text-center text-black">
-            Apa yang kamu ingin sampaikan tentang website ini?
+            Apa pesan dan kesan anda selaku pengguna website ini?
           </h2>
           <hr className="mb-6" />
           <form onSubmit={handleSubmit}>

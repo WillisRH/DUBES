@@ -43,7 +43,7 @@ export default function LoginPage() {
           title: "Success",
           text: `Welcome, ${response.data.username}!`,
           icon: "success",
-          timer: 3000, // Close after 3 seconds
+          timer: 1000, // Close after 3 seconds
           buttons: undefined, // Disable buttons to ensure auto-close
         }).then(() => {
           // Redirect to callback URL or home after closing
@@ -64,9 +64,9 @@ export default function LoginPage() {
   
           // Show a toast and swal for wrong credentials
           toast.error("Wrong Credentials!", {
-            position: "top-right",
+            position: "top-right"
           });
-          swal("Error", "Wrong credentials. Please try again.", "error");
+          swal("Error", "Invalid credentials. Please try again.", "error");
   
           setButtonClass(
             "mt-6 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 disabled:opacity-50"
@@ -85,11 +85,13 @@ export default function LoginPage() {
           );
         } else {
           // Show a swal alert for a general error
-          swal("Error", "Login failed. Please try again later.", "error");
+          swal("Error", "Invalid credentials. Please try again.", "error");
+          setLoading(false);
         }
       } else {
-        console.error("Login failed", error.message);
-        swal("Error", "Login failed. Please try again later.", "error");
+        // console.error("Login failed", error.message);
+        swal("Error", "Login failed. Please try again later. (Server Error)", "error");
+        setLoading(false);
       }
     } finally {
       setLoading(false);
@@ -123,6 +125,7 @@ export default function LoginPage() {
           value={user.email}
           onChange={(e) => setUser({ ...user, email: e.target.value })}
           onFocus={handleFocus}
+          required
           className="appearance-none mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 text-black"
           placeholder="Enter your email"
         />
@@ -135,13 +138,14 @@ export default function LoginPage() {
           value={user.password}
           onChange={(e) => setUser({ ...user, password: e.target.value })}
           onFocus={handleFocus}
+          required
           className="appearance-none mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 text-black"
           placeholder="Enter your password"
         />
 
         <button
           onClick={onLogin}
-          disabled={loading}
+          disabled={loading || !user.email || !user.password}
           className={buttonClass}
         >
           {loading ? "Logging in..." : buttonText}
