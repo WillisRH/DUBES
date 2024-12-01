@@ -21,18 +21,28 @@ export default function KesanPesan() {
   const [submittedFeedback, setSubmittedFeedback] = useState<Feedback | null>(
     null
   );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
     const storedFeedback = Cookies.get("feedback_submission");
     if (storedFeedback) {
-      setSubmittedFeedback(JSON.parse(storedFeedback));
+      try {
+        setSubmittedFeedback(JSON.parse(storedFeedback));
+      } catch {
+        Cookies.remove("feedback_submission"); // Remove invalid cookie data
+      }
     }
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const submission = {
+    // Prevent multiple submissions
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    const submission: Feedback = {
       name: name || "Anonymous",
       message,
       rating,
@@ -47,12 +57,14 @@ export default function KesanPesan() {
 
       if (!res.ok) throw new Error("Failed to save feedback");
 
-      const data = await res.json();
-      Cookies.set("feedback_submission", JSON.stringify(data), { expires: 7 }); // Save to cookies for 7 days
-      setSubmittedFeedback(data); // Update state with submitted feedback
+      const data: Feedback = await res.json();
+      Cookies.set("feedback_submission", JSON.stringify(data), { expires: 7 }); // Save for 7 days
+      setSubmittedFeedback(data); // Update state
       toast.success("Feedback submitted successfully!");
     } catch (error) {
       toast.error("Failed to submit feedback!");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,19 +94,14 @@ export default function KesanPesan() {
                   />
                 ))}
               </div>
-              <p className="text-2xl font-bold">
-                 {submittedFeedback.name}
-              </p>
-              <p className="text-xl">
-                 {submittedFeedback.message}
-              </p>
+              <p className="text-2xl font-bold">{submittedFeedback.name}</p>
+              <p className="text-xl">{submittedFeedback.message}</p>
             </div>
           </div>
         </div>
       </div>
     );
   }
-  
 
   // Show the form if no feedback has been submitted
   return (
@@ -163,9 +170,14 @@ export default function KesanPesan() {
 
             <button
               type="submit"
-              className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full"
+              disabled={isSubmitting}
+              className={`${
+                isSubmitting
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gray-800 hover:bg-gray-700"
+              } text-white font-bold py-2 px-4 rounded w-full`}
             >
-              Submit
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </form>
           <ToastContainer />
