@@ -537,7 +537,7 @@ export default function QuestionnaireWithScores() {
       : selectedName?.name === "MUHAMMAD AZZAM RUSKA" || selectedName?.name === "WILLIS RIHATMAN JOKO KANON"
       ? "bg-green-300"
       : "bg-sepia-100"
-  } flex items-center justify-center p-4 text-black`}
+  } flex items-center justify-center p-3 text-black`}
 >
 
               <div className="bg-white rounded-lg shadow-xl p-8 max-w-4xl w-full">
