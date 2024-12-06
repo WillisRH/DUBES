@@ -41,6 +41,12 @@ export default function KesanPesanDetail() {
     fetchFeedback();
   }, [id]);
 
+  useEffect(() => {
+    if (feedback) {
+        document.title = `${feedback?.name}'s Feedback`;
+    }
+}, [feedback]);
+
   if (!feedback) return <div>Loading...</div>;
 
   return (

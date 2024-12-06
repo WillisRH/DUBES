@@ -55,6 +55,12 @@ export default function ProfilePage() {
     getUserDetails();
   }, []);
 
+  useEffect(() => {
+    if (userData) {
+        document.title = `Profile [${userData?.username}]`;
+    }
+}, [userData]);
+
   return (
     <div>
       <Navbar />

@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import { motion } from 'framer-motion';
 import swal from 'sweetalert'
 import BackButton from '@/components/BackButton';
+import Head from 'next/head';
 
 interface QuestionProps {
     label: string;
@@ -197,6 +198,14 @@ const StatsPage = () => {
         fetchReports();
     }, [id]);
 
+    useEffect(() => {
+        if (reportData && reportData.length > 0) {
+            document.title = `${reportData[0]?.name}'s Statistics`;
+        } else {
+            document.title = `${id} Statistics`;
+        }
+    }, [reportData]);
+
 
     const handleCheckboxChange = async (reportId: string, handled: boolean) => {
         // Show loading animation while making the request
@@ -276,9 +285,21 @@ const StatsPage = () => {
             </div>
         )
     }
+
+    
     // if (error) return <p>{error}</p>;
 
     return (
+        <>
+        {reportData && reportData.length > 0 && (
+    <Head>
+        <title>{reportData[0]?.name}'s Statistics</title>
+        <meta name="description" content={`${reportData[0]?.name}'s detailed statistics`} />
+        <meta property="og:title" content={`${reportData[0]?.name}'s Statistics`} />
+    </Head>
+)}
+
+        
         <div>
             <Navbar />
             <BackButton/>
@@ -435,6 +456,7 @@ const StatsPage = () => {
                 )}
             </div>
         </div>
+        </>
     );
 };
 
