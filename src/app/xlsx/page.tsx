@@ -2,7 +2,7 @@
 import BackButton from '@/components/BackButton';
 import Navbar from '@/components/Navbar';
 import React, { useState } from 'react';
-import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx-color';
 
 const XlsxPage = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -160,7 +160,7 @@ const XlsxPage = () => {
                     <div className="mt-4">
                         <p className="text-sm text-gray-700">For the files, the users are from class:</p>
                         <div className="grid grid-cols-6 gap-4 justify-center">
-    {['x-1', 'x-2', 'x-3', 'x-4', 'x-5', 'x-6', 'xi-1', 'xi-2', 'xi-3', 'xi-4', 'xi-5', 'xi-6', 'xii-1', 'xii-2', 'xii-3', 'xii-4', 'xii-5', 'xii-6'].map((value) => (
+    {['x-1', 'x-2', 'x-3', 'x-4', 'x-5', 'x-6', 'xi-1', 'xi-2', 'xi-3', 'xi-4', 'xi-5', 'xi-6', 'xii-1', 'xii-2', 'xii-3', 'xii-4', 'xii-5', 'xii-6', 'xxx-debug'].map((value) => (
         <label
             key={value}
             className={`flex items-center justify-center p-4 bg-gray-200 rounded-lg cursor-pointer hover:bg-green-300 ${
