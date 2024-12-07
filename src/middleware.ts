@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
       });
 
       const responseData = await response.json();
-      console.log("Response from /api/admin/me:", responseData);
+      // console.log("Response from /api/admin/me:", responseData);
 
       // If the response is not OK and the user is trying to access /list or /stats, redirect to login
       // if (!response.ok && (path === '/list-siswa' || path === '/profile' || path === '/signup' || path.startsWith('/stats'))) {

@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import { FaExclamation, FaExclamationTriangle, FaSadCry } from 'react-icons/fa';
 import { FaSortAlphaDown, FaChalkboardTeacher } from 'react-icons/fa';
 import BackButton from '@/components/BackButton';
+import * as XLSX from 'xlsx-color';
 
 const ShowPage = () => {
     const [users, setUsers] = useState<{ _id: string; nisn: string; name: string; class?: string }[]>([]);
@@ -78,6 +79,81 @@ const ShowPage = () => {
     const censorNISN = (nisn: string) => {
         return nisn.slice(0, -4).replace(/./g, '*') + nisn.slice(-4);
     };
+
+    const downloadClassData = (className: string) => {
+        const classUsers = users.filter(user => user.class === className);
+        const data = classUsers.map(user => {
+            const userReports = reports.filter(report => report.nisn === user.nisn);
+            const latestReport = userReports.length > 0
+                ? userReports.reduce((latest, report) =>
+                    new Date(report.createdAt) > new Date(latest.createdAt) ? report : latest)
+                : null;
+    
+            const isSuicidal = latestReport?.answers?.[`mental16`] >= 6;
+            const bodyScore = latestReport?.bodyScore || 'N/A';
+            const physicalSymptoms = latestReport?.physicalSymptoms?.join(', ') || 'N/A';
+            const mentalSymptoms = latestReport?.mentalSymptoms?.join(', ') || 'N/A';
+            const totalProblems = (latestReport?.physicalSymptoms?.length || 0) + (latestReport?.mentalSymptoms?.length || 0);
+    
+            return {
+                NISN: user.nisn,
+                "NAMA LENGKAP": user.name,
+                "KEINGINAN BUNUH DIRI": isSuicidal ? 'Ada Keinginan' : 'Tidak Berkeinginan',
+                "BODY SCORE": bodyScore,
+                "TOTAL MASALAH": totalProblems,
+                "GEJALA FISIK": physicalSymptoms,
+                "GEJALA MENTAL": mentalSymptoms,
+            };
+        });
+    
+        const worksheet = XLSX.utils.json_to_sheet(data);
+    
+        // Color the header row yellow
+        const range = XLSX.utils.decode_range(worksheet['!ref'] || "");
+        for (let col = range.s.c; col <= range.e.c; col++) {
+            const cellAddress = XLSX.utils.encode_cell({ r: 0, c: col });
+            if (!worksheet[cellAddress]) continue;
+            worksheet[cellAddress].s = {
+                fill: {
+                    patternType: 'solid',
+                    fgColor: { rgb: 'FFFF00' },
+                },
+            };
+        }
+    
+        // Color rows based on total problems
+        data.forEach((row, rowIndex) => {
+            const totalProblems = row["TOTAL MASALAH"];
+            const rowStart = XLSX.utils.encode_cell({ r: rowIndex + 1, c: 0 }); // Start of row
+            const rowEnd = XLSX.utils.encode_cell({ r: rowIndex + 1, c: range.e.c }); // End of row
+    
+            for (let col = range.s.c; col <= range.e.c; col++) {
+                const cellAddress = XLSX.utils.encode_cell({ r: rowIndex + 1, c: col });
+                if (!worksheet[cellAddress]) continue;
+    
+                if (totalProblems >= 7) {
+                    worksheet[cellAddress].s = {
+                        fill: {
+                            patternType: 'solid',
+                            fgColor: { rgb: 'FF0000' },
+                        },
+                    };
+                } else if (totalProblems >= 5) {
+                    worksheet[cellAddress].s = {
+                        fill: {
+                            patternType: 'solid',
+                            fgColor: { rgb: 'FFFF00' },
+                        },
+                    };
+                }
+            }
+        });
+    
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, className);
+        XLSX.writeFile(workbook, `${className}_data.xlsx`);
+    };
+    
 
     const sortedUsers = [...filteredUsers].sort((a, b) => {
         if (sortBy === 'name') {
@@ -183,11 +259,17 @@ const ShowPage = () => {
                 {groupedUsers.map(([className, classUsers]) => (
                     <div key={className} className="w-full max-w-6xl mb-6">
                         <h1
-                            onClick={() => toggleClassVisibility(className)}
-                            className="text-xl font-bold text-black cursor-pointer p-2 bg-gray-100 rounded-md shadow-md hover:bg-gray-300 transition-colors"
-                        >
-                             {className.toUpperCase()} ({classUsers.length} murid) {visibleClasses[className] ? '▲' : '▼'}
-                        </h1>
+    onClick={() => toggleClassVisibility(className)}
+    className="text-xl font-bold text-black cursor-pointer p-2 bg-gray-100 rounded-md shadow-md hover:bg-gray-300 transition-colors flex justify-between items-center"
+>
+    {className.toUpperCase()} ({classUsers.length} murid) {visibleClasses[className] ? '▲' : '▼'}
+    <button
+        onClick={() => downloadClassData(className)}
+        className="text-blue-500 underline cursor-pointer text-sm ml-4 mr-2"
+    >
+        Import XLSX
+    </button>
+</h1>
 
                         {visibleClasses[className] && (
                             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">

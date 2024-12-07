@@ -36,6 +36,7 @@ export default function LoginPage() {
       if (response.status === 200) {
         toast.success(`Logged in as ${response.data.username}`, {
           position: "top-right",
+          className: "mt-8"
         });
   
         // Show a swal confirmation after login
@@ -60,7 +61,11 @@ export default function LoginPage() {
         const status = error.response.status;
   
         if (status === 400) {
-          setButtonText("Wrong Credentials");
+          setButtonText("Invalid Credentials");
+          toast.error(`Invalid Credentials`, {
+            position: "top-right",
+          });
+          swal("Error", "Invalid credentials. Please try again.", "error");
   
           // Show a toast and swal for wrong credentials
           // toast.error("Wrong Credentials!", {
@@ -85,6 +90,9 @@ export default function LoginPage() {
           );
         } else {
           // Show a swal alert for a general error
+          toast.error(`Invalid Credentials`, {
+            position: "top-right",
+          });
           swal("Error", "Invalid credentials. Please try again.", "error");
           setLoading(false);
         }

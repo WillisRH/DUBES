@@ -32,7 +32,7 @@
     "react-toastify": "^10.0.6",
     "sweetalert": "^2.1.2",
     "swr": "^2.2.5",
-    "xlsx": "^0.18.5"
+    "xlsx-color": "^0.14.30"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

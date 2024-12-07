@@ -97,7 +97,7 @@ async function POST(request: NextRequest) {
 
     return response;
   } catch (error: any) {
-    console.log(error);
+    // console.log(error);
     return new NextResponse(JSON.stringify({ error: error.message }), { status: 500 });
   }
 }
