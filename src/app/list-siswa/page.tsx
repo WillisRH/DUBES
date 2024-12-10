@@ -8,6 +8,13 @@ import { FaSortAlphaDown, FaChalkboardTeacher } from 'react-icons/fa';
 import BackButton from '@/components/BackButton';
 import * as XLSX from 'xlsx-color';
 
+interface UserData {
+    _id: string;
+    username: string;
+    email: string;
+  }
+
+  
 const ShowPage = () => {
     const [users, setUsers] = useState<{ _id: string; nisn: string; name: string; class?: string }[]>([]);
     const [reports, setReports] = useState<any[]>([]);
@@ -17,6 +24,7 @@ const ShowPage = () => {
     const [sortBy, setSortBy] = useState<'name' | 'symptom' | 'class' | 'suicidal' | 'presentation'>('class');
     const [visibleClasses, setVisibleClasses] = useState<{ [key: string]: boolean }>({});
     const [isPresentationMode, setIsPresentationMode] = useState(false);
+    const [userData, setUserData] = useState<UserData | null>(null); // Set type for userData
     const router = useRouter();
     const censorName = (name: string) => {
         if (!isPresentationMode) return name;
@@ -32,11 +40,22 @@ const ShowPage = () => {
     };
     
     
-    
+    const getUserDetails = async () => {
+        try {
+          const res = await axios.get('/api/admin/me');
+          setUserData(res.data.data);
+        } catch (error: any) {
+          console.error("Failed to get user details:", error.message);
+        }
+      };
 
     const togglePresentationMode = () => {
         setIsPresentationMode((prev) => !prev);
     };
+
+    useEffect(() => {
+        getUserDetails();
+      }, []);
 
     useEffect(() => {
         const fetchUsersAndReports = async () => {
@@ -279,16 +298,18 @@ const ShowPage = () => {
         <FaSadCry className="mr-2" />
         Suicidal
     </button>
-
+{userData?.username === "wlsrh" || userData?.username === "presentasi" &&  (
     <button
     onClick={togglePresentationMode} // Toggles the presentation mode
     className={`flex items-center px-4 py-2 border rounded-md ${
-        isPresentationMode ? 'bg-blue-500 text-white' : 'bg-white text-gray-800'
+        isPresentationMode ? 'bg-yellow-500 text-white' : 'bg-white text-gray-800'
     }`}
 >
     <FaUser className="mr-2" />
-    Presentation
+    Presentation Mode
 </button>
+)}
+
 
 
 </div>
