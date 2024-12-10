@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { FaExclamation, FaExclamationTriangle, FaSadCry } from 'react-icons/fa';
+import { FaExclamation, FaExclamationTriangle, FaPrescriptionBottleAlt, FaSadCry, FaTable, FaUser, FaUserAlt } from 'react-icons/fa';
 import { FaSortAlphaDown, FaChalkboardTeacher } from 'react-icons/fa';
 import BackButton from '@/components/BackButton';
 import * as XLSX from 'xlsx-color';
@@ -14,9 +14,29 @@ const ShowPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [sortBy, setSortBy] = useState<'name' | 'symptom' | 'class' | 'suicidal'>('class');
+    const [sortBy, setSortBy] = useState<'name' | 'symptom' | 'class' | 'suicidal' | 'presentation'>('class');
     const [visibleClasses, setVisibleClasses] = useState<{ [key: string]: boolean }>({});
+    const [isPresentationMode, setIsPresentationMode] = useState(false);
     const router = useRouter();
+    const censorName = (name: string) => {
+        if (!isPresentationMode) return name;
+    
+        const parts = name.split(' ');
+        return parts
+            .map((part, index) =>
+                index === 0
+                    ? part[0] + '*'.repeat(part.length - 1) // First name: Show the first letter
+                    : '*'.repeat(part.length) // Other names: Fully mask
+            )
+            .join(' ');
+    };
+    
+    
+    
+
+    const togglePresentationMode = () => {
+        setIsPresentationMode((prev) => !prev);
+    };
 
     useEffect(() => {
         const fetchUsersAndReports = async () => {
@@ -172,6 +192,10 @@ const ShowPage = () => {
             const aCritical = reports.some(report => report.nisn === a.nisn && report.answers?.mental16 >= 6) ? 1 : 0;
             const bCritical = reports.some(report => report.nisn === b.nisn && report.answers?.mental16 >= 6) ? 1 : 0;
             return bCritical - aCritical;
+        } else if (sortBy === 'presentation') {
+            const aCensoredName = censorName(a.name);
+            const bCensoredName = censorName(b.name);
+            return aCensoredName.localeCompare(bCensoredName);
         }
         return 0; // Default case to ensure a valid number is always returned
     });
@@ -199,6 +223,7 @@ const ShowPage = () => {
             <Navbar />
             <BackButton />
             <div className="flex flex-col items-center py-10 px-4 bg-gray-50 min-h-screen mt-4">
+
                 <h1 className="text-2xl font-bold mb-2 text-gray-700">Hasil Checkup</h1>
 
 
@@ -254,6 +279,18 @@ const ShowPage = () => {
         <FaSadCry className="mr-2" />
         Suicidal
     </button>
+
+    <button
+    onClick={togglePresentationMode} // Toggles the presentation mode
+    className={`flex items-center px-4 py-2 border rounded-md ${
+        isPresentationMode ? 'bg-blue-500 text-white' : 'bg-white text-gray-800'
+    }`}
+>
+    <FaUser className="mr-2" />
+    Presentation
+</button>
+
+
 </div>
 
                 {groupedUsers.map(([className, classUsers]) => (
@@ -311,7 +348,7 @@ const ShowPage = () => {
 )}
 
 
-                                            <h2 className="text-lg font-semibold text-gray-800">{user.name}</h2>
+                                            <h2 className="text-lg font-semibold text-gray-800"> {isPresentationMode ? censorName(user.name) : user.name}</h2>
                                             <p className="text-gray-600">{censorNISN(user.nisn)}</p>
                                         </div>
                                     );
