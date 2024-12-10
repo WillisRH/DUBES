@@ -298,7 +298,7 @@ const ShowPage = () => {
         <FaSadCry className="mr-2" />
         Suicidal
     </button>
-{userData?.username === "wlsrh" || userData?.username === "presentasi" &&  (
+    {(userData?.username === "wlsrh" || userData?.username === "presentasi") && (
     <button
     onClick={togglePresentationMode} // Toggles the presentation mode
     className={`flex items-center px-4 py-2 border rounded-md ${
